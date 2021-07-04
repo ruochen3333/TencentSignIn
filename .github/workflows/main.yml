@@ -36,4 +36,10 @@ jobs:
           sudo cp -p ./Chrome/chromedriver /usr/bin/
           chmod -R 777 /usr/bin/chromedriver
           python Tencent.py
-         
+        env:
+          IF_SERVER: ${{ secrets.IF_SERVER }}
+          IF_DING: ${{ secrets.IF_DING }}
+          SERVER_SCKEY: ${{ secrets.SERVER_SCKEY }}
+          DING_URL: ${{ secrets.DING_URL }}
+          DING_SECRET: ${{ secrets.DING_SECRET }}
+
