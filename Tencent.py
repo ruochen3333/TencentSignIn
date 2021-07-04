@@ -18,16 +18,6 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 
-chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument('--headless')
-chrome_options.add_argument('--no-sandbox')
-chrome_options.add_argument('--disable-gpu')
-chrome_options.add_argument('--disable-dev-shm-usage')
-chromedriver = "/usr/bin/chromedriver"
-os.environ["webdriver.chrome.driver"] = chromedriver
-driver = webdriver.Chrome(chrome_options=chrome_options, executable_path=chromedriver)
-# driver = webdriver.Chrome(chrome_options=chrome_options)
-
 # ==============  1.功能开关配置项 ============== #
 # 填 on 则开启，开启的同时也需要配置3中的选项，不填或填其他则关闭
 IF_SERVER = os.environ['IF_SERVER']  # 选填！是否开启 server 酱通知
@@ -44,6 +34,15 @@ DING_SECRET = os.environ['DING_SECRET']  # 选填！钉钉机器人加签 secret
 TEXT = ''  # 消息标题
 DESP = ''  # 消息内容
 
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument('--headless')
+chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument('--disable-gpu')
+chrome_options.add_argument('--disable-dev-shm-usage')
+chromedriver = "/usr/bin/chromedriver"
+os.environ["webdriver.chrome.driver"] = chromedriver
+driver = webdriver.Chrome(chrome_options=chrome_options, executable_path=chromedriver)
+# driver = webdriver.Chrome(chrome_options=chrome_options)
 
 def getCookie():
     global driver
