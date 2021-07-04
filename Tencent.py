@@ -74,6 +74,7 @@ def SignIn():
 
         driver.find_element_by_class_name('bmh-oviewcard-cbtns-btn').click()
         driver.find_element(By.XPATH, '//span[text()="立即签到"]').click()
+        driver.refresh()
 
         DESP = driver.find_element_by_class_name('bmh-oviewcard-cbtns-remind').text
         DESP += driver.find_element_by_class_name('bmh-oviewcard-cbtns-bouns').text
