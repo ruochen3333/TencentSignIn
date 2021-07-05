@@ -68,11 +68,20 @@ def login():
     driver.find_element_by_class_name('J-username').send_keys(EMAIL)
     driver.find_element_by_class_name('J-password').send_keys(PWD)
     driver.find_element_by_class_name('J-loginBtn').click()
+    try:
+        tip = driver.find_element_by_class_name('J-loginTip').text
+        return None
+    except Exception:
+        pass
     return driver
         
 def SignIn():
     global TEXT
     global DESP
+        if driver is None:
+        TEXT = '签到失败'
+        DESP = '登录失败，账号或密码错误！'
+        return
     try:
         driver.get('https://cloud.tencent.com/act/integralmall?from=14376')
         # with open('cookie.txt', 'r') as f:
@@ -93,12 +102,10 @@ def SignIn():
         DESP = driver.find_element_by_class_name('bmh-oviewcard-cbtns-remind').text
         DESP += driver.find_element_by_class_name('bmh-oviewcard-cbtns-bouns').text
         TEXT = '签到成功！'
-        print(TEXT, DESP)
     except Exception as e:
         TEXT = '签到失败！'
         DESP = '签到失败'
         print(e)
-        print(TEXT, DESP)
 
 
 class Notice:
@@ -149,6 +156,7 @@ def run():
     n = Notice()
     driver = login()
     SignIn(driver)
+    print(TEXT, DESP)
 
     if IF_SERVER == 'on':
         n.server()
