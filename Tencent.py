@@ -19,7 +19,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 
 # ==============  1.登录信息 ============== #
-EMAIL = os.environ['EMAIL']  # 邮箱地址
+# EMAIL = os.environ['EMAIL']  # 邮箱地址
+EMAIL = '1441865605@qq.com'
 PWD = os.environ['PWD']      # 登录密码
 
 # ==============  2.功能开关配置项 ============== #
