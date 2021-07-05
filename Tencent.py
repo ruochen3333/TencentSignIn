@@ -69,8 +69,6 @@ def login():
     driver.find_element_by_class_name('J-username').send_keys(EMAIL)
     driver.find_element_by_class_name('J-password').send_keys(PWD)
     driver.find_element_by_class_name('J-loginBtn').click()
-    html = driver.execute_script("return document.documentElement.outerHTML")
-    print(html)
     try:
         tip = driver.find_element_by_class_name('J-loginTip').text
         return None
@@ -78,26 +76,26 @@ def login():
         pass
     return driver
         
-def SignIn(driver):
+def SignIn():
     global TEXT
     global DESP
-    if driver is None:
-        TEXT = '签到失败'
-        DESP = '登录失败，账号或密码错误！'
-        return
+#     if driver is None:
+#         TEXT = '签到失败'
+#         DESP = '登录失败，账号或密码错误！'
+#         return
     try:
         driver.get('https://cloud.tencent.com/act/integralmall?from=14376')
-        # with open('cookie.txt', 'r') as f:
-        #     cookie = json.load(f)
-        # for c in cookie:
-        #     driver.add_cookie(c)
+        with open('cookie.txt', 'r') as f:
+            cookie = json.load(f)
+        for c in cookie:
+            driver.add_cookie(c)
 
-        # time.sleep(2)
-        # 刷新页面
-        # driver.refresh()
-        # html = driver.execute_script("return document.documentElement.outerHTML")
-        # print(html)
-        # time.sleep(0.5)
+        time.sleep(2)
+        刷新页面
+        driver.refresh()
+        html = driver.execute_script("return document.documentElement.outerHTML")
+        print(html)
+        time.sleep(0.5)
         driver.find_element_by_class_name('bmh-oviewcard-cbtns-btn').click()
         driver.find_element(By.XPATH, '//span[text()="立即签到"]').click()
         driver.refresh()
@@ -157,8 +155,9 @@ class Notice:
 
 def run():
     n = Notice()
-    driver = login()
-    SignIn(driver)
+#     driver = login()
+#     SignIn(driver)
+    SignIn()
     print(TEXT, DESP)
 
     if IF_SERVER == 'on':
