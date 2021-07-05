@@ -78,7 +78,7 @@ def login():
 def SignIn():
     global TEXT
     global DESP
-        if driver is None:
+    if driver is None:
         TEXT = '签到失败'
         DESP = '登录失败，账号或密码错误！'
         return
