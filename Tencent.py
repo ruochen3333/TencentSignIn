@@ -18,19 +18,23 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 
-# ==============  1.功能开关配置项 ============== #
+# ==============  1.登录信息 ============== #
+EMAIL = os.environ['EMAIL']  # 邮箱地址
+PWD = os.environ['PWD']      # 登录密码
+
+# ==============  2.功能开关配置项 ============== #
 # 填 on 则开启，开启的同时也需要配置3中的选项，不填或填其他则关闭
 IF_SERVER = os.environ['IF_SERVER']  # 选填！是否开启 server 酱通知
 # IF_WECHAT = os.environ['IF_WECHAT']  # 选填！是否开启企业微信通知
 IF_DING = os.environ['IF_DING']  # 选填！是否开启钉钉通知
 
-# ==============  2.消息通知配置项 ============== #
+# ==============  3.消息通知配置项 ============== #
 SERVER_SCKEY = os.environ['SERVER_SCKEY']  # 选填！server 酱的 SCKEY
 # WECHAT_URL = os.environ['WECHAT_URL']  # 选填！企业微信机器人 url
 DING_URL = os.environ['DING_URL']  # 选填！钉钉机器人 url
 DING_SECRET = os.environ['DING_SECRET']  # 选填！钉钉机器人加签 secret
 
-# ==============  3.准备发送的消息 ============== #
+# ==============  4.准备发送的消息 ============== #
 TEXT = ''  # 消息标题
 DESP = ''  # 消息内容
 
@@ -53,24 +57,33 @@ def getCookie():
         f.write(json.dumps(cookies))
         driver.close()
 
-
-def SignIn():
+def login():
     global driver
+    driver.get('https://cloud.tencent.com/login?s_url=https%3A%2F%2Fcloud.tencent.com%2F')
+    # clg = driver.find_element_by_class_name('clg-other-con')
+    # print(clg)
+    driver.find_element(By.XPATH, '//div[@class="clg-other-con J-switchLoginTypeArea"]/div[1]').click()
+    driver.find_element_by_class_name('J-username').send_keys(EMAIL)
+    driver.find_element_by_class_name('J-password').send_keys(PWD)
+    driver.find_element_by_class_name('J-loginBtn').click()
+    return driver
+        
+def SignIn():
     global TEXT
     global DESP
     try:
         driver.get('https://cloud.tencent.com/act/integralmall?from=14376')
-        with open('cookie.txt', 'r') as f:
-            cookie = json.load(f)
-        for c in cookie:
-            driver.add_cookie(c)
+        # with open('cookie.txt', 'r') as f:
+        #     cookie = json.load(f)
+        # for c in cookie:
+        #     driver.add_cookie(c)
 
-        time.sleep(2)
+        # time.sleep(2)
         # 刷新页面
-        driver.refresh()
+        # driver.refresh()
         # html = driver.execute_script("return document.documentElement.outerHTML")
         # print(html)
-        time.sleep(0.5)
+        # time.sleep(0.5)
         driver.find_element_by_class_name('bmh-oviewcard-cbtns-btn').click()
         driver.find_element(By.XPATH, '//span[text()="立即签到"]').click()
         driver.refresh()
@@ -126,7 +139,8 @@ class Notice:
 
 def run():
     n = Notice()
-    SignIn()
+    driver = login()
+    SignIn(driver)
 
     if IF_SERVER == 'on':
         n.server()
