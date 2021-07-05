@@ -154,7 +154,7 @@ def run():
         n.server()
     # if IF_WECHAT == 'on':
     #     n.wechat()
-    IF IF_PUSHPLUS = 'on':
+    if IF_PUSHPLUS = 'on':
         n.pushplus()
     if IF_DING == 'on':
         n.ding()
