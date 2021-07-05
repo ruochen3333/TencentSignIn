@@ -21,6 +21,7 @@ from selenium.webdriver.chrome.options import Options
 # ==============  1.登录信息 ============== #
 EMAIL = os.environ['EMAIL']  # 邮箱地址
 PWD = os.environ['PWD']      # 登录密码
+print(EMAIL, PWD)
 
 # ==============  2.功能开关配置项 ============== #
 # 填 on 则开启，开启的同时也需要配置3中的选项，不填或填其他则关闭
@@ -68,6 +69,8 @@ def login():
     driver.find_element_by_class_name('J-username').send_keys(EMAIL)
     driver.find_element_by_class_name('J-password').send_keys(PWD)
     driver.find_element_by_class_name('J-loginBtn').click()
+    html = driver.execute_script("return document.documentElement.outerHTML")
+    print(html)
     try:
         tip = driver.find_element_by_class_name('J-loginTip').text
         return None
