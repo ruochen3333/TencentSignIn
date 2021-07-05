@@ -72,12 +72,14 @@ def login():
     try:
         iframe = driver.find_element_by_id('wxFrame')
         src = iframe.get_attribute("src")
-        print(src)
+        TEXT = '请登录'
+        DESP= src
+        Notice.ding()
+        time.sleep(5)
     except Exception:
-        print('报错')
         pass
-#     html = driver.execute_script("return document.documentElement.outerHTML")
-#     print(html)
+    html = driver.execute_script("return document.documentElement.outerHTML")
+    print(html)
 #     try:
 #         tip = driver.find_element_by_class_name('J-loginTip').text
 #         return None
