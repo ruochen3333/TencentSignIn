@@ -91,7 +91,7 @@ def SignIn():
             driver.add_cookie(c)
 
         time.sleep(2)
-        刷新页面
+        # 刷新页面
         driver.refresh()
         html = driver.execute_script("return document.documentElement.outerHTML")
         print(html)
