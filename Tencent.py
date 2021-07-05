@@ -61,17 +61,16 @@ def SignIn():
     try:
         driver.get('https://cloud.tencent.com/act/integralmall?from=14376')
         with open('cookie.txt', 'r') as f:
-            cookie = f.read()
-            cookie = json.loads(cookie)
+            cookie = json.load(cookie)
         for c in cookie:
             driver.add_cookie(c)
 
-        time.sleep(3)
+        time.sleep(2)
         # 刷新页面
         driver.refresh()
         # html = driver.execute_script("return document.documentElement.outerHTML")
         # print(html)
-
+        time.sleep(0.5)
         driver.find_element_by_class_name('bmh-oviewcard-cbtns-btn').click()
         driver.find_element(By.XPATH, '//span[text()="立即签到"]').click()
         driver.refresh()
