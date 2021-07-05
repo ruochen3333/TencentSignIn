@@ -25,11 +25,13 @@ PWD = os.environ['PWD']      # 登录密码
 # ==============  2.功能开关配置项 ============== #
 # 填 on 则开启，开启的同时也需要配置3中的选项，不填或填其他则关闭
 IF_SERVER = os.environ['IF_SERVER']  # 选填！是否开启 server 酱通知
+IF_PUSHPLUS = os.environ['IF_PUSHPLUS']  # 选填！是否开始 pushplus 通知
 # IF_WECHAT = os.environ['IF_WECHAT']  # 选填！是否开启企业微信通知
 IF_DING = os.environ['IF_DING']  # 选填！是否开启钉钉通知
 
 # ==============  3.消息通知配置项 ============== #
 SERVER_SCKEY = os.environ['SERVER_SCKEY']  # 选填！server 酱的 SCKEY
+TOKEN = os.environ['TOKEN']
 # WECHAT_URL = os.environ['WECHAT_URL']  # 选填！企业微信机器人 url
 DING_URL = os.environ['DING_URL']  # 选填！钉钉机器人 url
 DING_SECRET = os.environ['DING_SECRET']  # 选填！钉钉机器人加签 secret
@@ -100,6 +102,12 @@ def SignIn():
 
 
 class Notice:
+    
+    @staticmethod
+    def pushplus():
+        requests.get(
+            'http://www.pushplus.plus/send?token={}&title={}&content={}&ttemplate=html'.format(TOKEN, TEXT, DESP))
+        
     @staticmethod
     def server():
         requests.get('https://sctapi.ftqq.com/{}.send?text={}&desp={}'.format(SERVER_SCKEY, TEXT, DESP))
@@ -146,6 +154,8 @@ def run():
         n.server()
     # if IF_WECHAT == 'on':
     #     n.wechat()
+    IF IF_PUSHPLUS = 'on':
+        n.pushplus()
     if IF_DING == 'on':
         n.ding()
 
