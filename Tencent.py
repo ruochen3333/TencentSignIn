@@ -120,7 +120,7 @@ def login():
         DESP= src
         requests.get(
             'http://www.pushplus.plus/send?token={}&title={}&content={}&ttemplate=html'.format(TOKEN, TEXT, DESP))
-        time.sleep(5)
+        time.sleep(20)
     except Exception:
         pass
 #     html = driver.execute_script("return document.documentElement.outerHTML")
