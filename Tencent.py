@@ -69,6 +69,7 @@ def login():
     driver.find_element_by_class_name('J-username').send_keys(EMAIL)
     driver.find_element_by_class_name('J-password').send_keys(PWD)
     driver.find_element_by_class_name('J-loginBtn').click()
+    driver.get_screenshot_as_file('img.png')
     html = driver.execute_script("return document.documentElement.outerHTML")
     print(html)
     try:
