@@ -51,6 +51,49 @@ os.environ["webdriver.chrome.driver"] = chromedriver
 driver = webdriver.Chrome(chrome_options=chrome_options, executable_path=chromedriver)
 # driver = webdriver.Chrome(chrome_options=chrome_options)
 
+class Notice:
+    
+    @staticmethod
+    def pushplus():
+        requests.get(
+            'http://www.pushplus.plus/send?token={}&title={}&content={}&ttemplate=html'.format(TOKEN, TEXT, DESP))
+        
+    @staticmethod
+    def server():
+        requests.get('https://sctapi.ftqq.com/{}.send?text={}&desp={}'.format(SERVER_SCKEY, TEXT, DESP))
+
+    '''
+    @staticmethod
+    def wechat():
+        data = {
+            'msgtype': 'text',
+            'text': {
+                'content': DESP
+            }
+        }
+        headers = {'content-type': 'application/json'}
+        requests.post(url=WECHAT_URL, headers=headers, data=json.dumps(data))
+    '''
+
+    @staticmethod
+    def ding():
+        timestamp = str(round(time.time() * 1000))
+        secret = DING_SECRET
+        secret_enc = secret.encode('utf-8')
+        string_to_sign = '{}\n{}'.format(timestamp, secret)
+        string_to_sign_enc = string_to_sign.encode('utf-8')
+        hmac_code = hmac.new(secret_enc, string_to_sign_enc, digestmod=hashlib.sha256).digest()
+        sign = urllib.parse.quote_plus(base64.b64encode(hmac_code))
+        headers = {'Content-Type': 'application/json'}
+        complete_url = DING_URL + '&timestamp=' + timestamp + "&sign=" + sign
+        data = {
+            "text": {
+                "content": DESP
+            },
+            "msgtype": "text"
+        }
+        requests.post(url=complete_url, data=json.dumps(data), headers=headers)
+
 def getCookie():
     global driver
     driver.get('https://cloud.tencent.com/login?s_url=https%3A%2F%2Fcloud.tencent.com%2F')
@@ -116,51 +159,6 @@ def SignIn(driver):
         TEXT = '签到失败！'
         DESP = '签到失败'
         print(e)
-
-
-class Notice:
-    
-    @staticmethod
-    def pushplus():
-        requests.get(
-            'http://www.pushplus.plus/send?token={}&title={}&content={}&ttemplate=html'.format(TOKEN, TEXT, DESP))
-        
-    @staticmethod
-    def server():
-        requests.get('https://sctapi.ftqq.com/{}.send?text={}&desp={}'.format(SERVER_SCKEY, TEXT, DESP))
-
-    '''
-    @staticmethod
-    def wechat():
-        data = {
-            'msgtype': 'text',
-            'text': {
-                'content': DESP
-            }
-        }
-        headers = {'content-type': 'application/json'}
-        requests.post(url=WECHAT_URL, headers=headers, data=json.dumps(data))
-    '''
-
-    @staticmethod
-    def ding():
-        timestamp = str(round(time.time() * 1000))
-        secret = DING_SECRET
-        secret_enc = secret.encode('utf-8')
-        string_to_sign = '{}\n{}'.format(timestamp, secret)
-        string_to_sign_enc = string_to_sign.encode('utf-8')
-        hmac_code = hmac.new(secret_enc, string_to_sign_enc, digestmod=hashlib.sha256).digest()
-        sign = urllib.parse.quote_plus(base64.b64encode(hmac_code))
-        headers = {'Content-Type': 'application/json'}
-        complete_url = DING_URL + '&timestamp=' + timestamp + "&sign=" + sign
-        data = {
-            "text": {
-                "content": DESP
-            },
-            "msgtype": "text"
-        }
-        requests.post(url=complete_url, data=json.dumps(data), headers=headers)
-
 
 def run():
     n = Notice()
