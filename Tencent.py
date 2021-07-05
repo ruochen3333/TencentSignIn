@@ -75,7 +75,7 @@ def login():
         pass
     return driver
         
-def SignIn():
+def SignIn(driver):
     global TEXT
     global DESP
     if driver is None:
