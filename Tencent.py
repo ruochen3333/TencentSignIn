@@ -79,9 +79,12 @@ def SignIn():
         DESP = driver.find_element_by_class_name('bmh-oviewcard-cbtns-remind').text
         DESP += driver.find_element_by_class_name('bmh-oviewcard-cbtns-bouns').text
         TEXT = '签到成功！'
-    except Exception:
+        print(TEXT, DESP)
+    except Exception as e:
         TEXT = '签到失败！'
         DESP = '签到失败'
+        print(e)
+        print(TEXT, DESP)
 
 
 class Notice:
