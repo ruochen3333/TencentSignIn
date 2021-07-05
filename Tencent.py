@@ -61,7 +61,7 @@ def SignIn():
     try:
         driver.get('https://cloud.tencent.com/act/integralmall?from=14376')
         with open('cookie.txt', 'r') as f:
-            cookie = json.load(cookie)
+            cookie = json.load(f)
         for c in cookie:
             driver.add_cookie(c)
 
